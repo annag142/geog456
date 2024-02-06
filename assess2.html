@@ -12,73 +12,68 @@ crossorigin=""/>
 integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo="
 crossorigin=""></script>
 <style>
-    #map { height: 500px;  }
+    #map { height: 500px; width: 500px }
 </style>
+
 <body>
+    <h2>GEOG 456 Assessment 2</h2>
+    <a href = "https://en.wikipedia.org/wiki/2021_Atlantic_hurricane_season"><h3>Hurricane Ana 2021</h3></a>
+
     <div id="map"></div>
-    <!-- Script tag with an address to the source of a js script -->
-    <script src="./"></script>
+
+    <a href = "https://upload.wikimedia.org/wikipedia/commons/thumb/9/93/Ana_2021-05-22_1505Z.jpg/1024px-Ana_2021-05-22_1505Z.jpg"><h3>Hurricane Ana Image</h3></a>
+    <a href = "https://upload.wikimedia.org/wikipedia/commons/thumb/9/93/Ana_2021-05-22_1505Z.jpg/1024px-Ana_2021-05-22_1505Z.jpg"><img src = "ana.jpeg"; height = 500px></a> 
+
+    <script src="./waypoints.js"></script>
+
     <script>
-//         // var Esri_WorldImagery = L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}', {
-// 	attribution: 'Tiles &copy; Esri &mdash; Source: Esri, i-cubed, USDA, USGS, AEX, GeoEye, Getmapping, Aerogrid, IGN, IGP, UPR-EGP, and the GIS User Community'
-// });
-        var storm= [-55.5, 30.3 ]
+        var Esri_WorldImagery = L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}', {
+	    attribution: 'Tiles &copy; Esri &mdash; Source: Esri, i-cubed, USDA, USGS, AEX, GeoEye, Getmapping, Aerogrid, IGN, IGP, UPR-EGP, and the GIS User Community'
+        });
+        var storm= waypoints.features
+        var center= [33.906895551288684,-60.29296875000001]
+        var map = L.map('map').setView(center, 5);
 
-        var map = L.map('map').setView(storm, 300);
+        var marker = L.marker([34.05265942137599,-64.73693847656251]).bindPopup("<b>Hurricane Ana did not make landfall</b>").addTo(map);
+
         var OSM = L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
                         maxZoom: 19,
                         attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
                     }).addTo(map);
-        
-        var marker = L.marker([35.911276,-79.05004]).bindPopup("<b>storm</b>").addTo(map);
         var Esri_OceanBasemap = L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/Ocean/World_Ocean_Base/MapServer/tile/{z}/{y}/{x}', {
-	attribution: 'Tiles &copy; Esri &mdash; Sources: GEBCO, NOAA, CHS, OSU, UNH, CSUMB, National Geographic, DeLorme, NAVTEQ, and Esri',
-	maxZoom: 13
-});
-        var OSM = L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
-                        maxZoom: 19,
-                        attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
-                    }).addTo(map);
-                    //L.geoJSON(waypoints).addTo(map);
-                    
-                    var geojsonMarkerOptions = {
-                        radius: 8,
-                        fillColor: "#99badd",
-                        color: "#000",
-                        weight: 1,
-                        opacity: 1,
-                        fillOpacity: 0.8
-                    };
+	    attribution: 'Tiles &copy; Esri &mdash; Sources: GEBCO, NOAA, CHS, OSU, UNH, CSUMB, National Geographic, DeLorme, NAVTEQ, and Esri',
+	    maxZoom: 13
+        }).addTo(map);
+         var geojsonMarkerOptions = {
+            adius: 8,
+            fillColor: "#ffb6c1",
+            color: "#000",
+            weight: 1,
+            opacity: 1,
+            fillOpacity: 0.8
+        };
 
-                //     var myWaypoints= L.geoJSON(waypoints, {
-                //         pointToLayer: function (feature, latlng) {
-                //             return L.circleMarker(latlng, geojsonMarkerOptions);
-                //         }
-                //     }).addTo(map);
+        var points = L.geoJSON(storm, { 
+            pointToLayer: function (feature, latlng) {
+                return L.circleMarker(latlng, geojsonMarkerOptions);
+            }
+        }).addTo(map);
 
-                //     var lon = waypoints.features[0].geometry.coordinates[0]
-                //     var lat = waypoints.features[0].geometry.coordinates[1]
-                //     var latLon = [lat,lon]
-                //     var myFirstPoint= L.marker(latLon).addTo(map)
-                //     var myA= waypoints.features.map(e=>e) 
-                //     var myAr= waypoints.features.map(e => e.geometry.coordinates)
-                    var baseMaps = {
-                    "OpenStreetMap": OSM,
-                    // "ESRI Images": Esri_WorldImagery, 
-                    "ESRI Ocean": Esri_OceanBasemap,
-                };
-                
+        var baseMaps = {
+        "OpenStreetMap": OSM, 
+        "ESRI Ocean": Esri_OceanBasemap,
+        };
+         
+        var overlayMaps = {
+            "Storm Locations": points,
+            "Closest Possible Landfall": marker 
+        };
 
-            //    // var overlayMaps = {
-            //         "GPS": myWaypoints, 
-            //         "Carolina Hall": marker,
-            //         "My first waypoiny": myFirstPoint
-            //     };
-                var layerControl = L.control.layers(baseMaps).addTo(map);
+        var layerControl = L.control.layers(baseMaps).addTo(map);
             
                     
 
     </script>
-    <!-- <script src="./data/javascriptLines.js"></script> -->
+
 </body>
 </html>
