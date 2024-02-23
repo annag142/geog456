@@ -25,6 +25,7 @@ tr:nth-child(even) {
 <body>
 
 <h2>Table of Estuarine Benthic Habitat Mapping Areas</h2>
+<h4>Anna Gibbons Assignment 6</h4>
 
 <table id= "mytable">
   <tr>
@@ -35,7 +36,7 @@ tr:nth-child(even) {
 
 </body>
 <script>
-  var x = document.getElementById('myTable')
+  var x = document.getElementById('mytable')
 
   for (var i=0; i<data.length; i++){
     var myNewRow = document.createElement('tr')
@@ -43,7 +44,7 @@ tr:nth-child(even) {
     var myNewCell2 = document.createElement('td')
     myNewCell1.innerText = data[i].month_map;
     myNewCell2.innerText = data[i].strata_d;
-    
+
     myNewRow.append(myNewCell1)
     myNewRow.append(myNewCell2)
     x.append(myNewRow)
