@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+<head>
+<style>
+table {
+  font-family: arial, sans-serif;
+  border-collapse: collapse;
+  width: 100%;
+}
+
+td, th {
+  border: 1px solid #dddddd;
+  text-align: left;
+  padding: 8px;
+}
+
+tr:nth-child(even) {
+  background-color: #dddddd;
+}
+</style>
+</head>
+<script src="data.js"></script>
+<script>
+  </script>
+<body>
+
+<h2>Table of Estuarine Benthic Habitat Mapping Areas</h2>
+
+<table id= "mytable">
+  <tr>
+    <th>Month</th>
+    <th>Strata</th>
+  </tr>
+</table>
+
+</body>
+<script>
+  var x = document.getElementById('myTable')
+
+  for (var i=0; i<data.length; i++){
+    var myNewRow = document.createElement('tr')
+    var myNewCell1 = document.createElement('td')
+    var myNewCell2 = document.createElement('td')
+    myNewCell1.innerText = data[i].month_map;
+    myNewCell2.innerText = data[i].strata_d;
+    
+    myNewRow.append(myNewCell1)
+    myNewRow.append(myNewCell2)
+    x.append(myNewRow)
+  }
+</script>
+
+
+</html>
+
