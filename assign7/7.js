@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.4.1/papaparse.min.js" 
+    integrity="sha512-dfX5uYVXzyU8+KHqj8bjo7UkOdg18PaOtpa48djpNbZHwExddghZ+ZmzWT06R5v6NSk3ZUfsH6FNEDepLx9hPQ==" 
+    crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+</head>
+<body>
+	<h2>Assignment 4</h2>
+    <script>
+    	let myResult
+    	const fileUrl = ""
+    	Papa.parse(fileUrl, {
+        	download: true,
+        	header: true,
+        	complete: function(result) {
+            	console.log(result.data)
+            	myResult = result.data
+        	}
+    	})
+        </script>
+
+</body>
+</html>
