@@ -19,11 +19,20 @@
         width: 100%;
         height: 500px;
          }
+    #dwarfGoatfishImage {
+        max-width: 25vw; /* Set the maximum width to 25% of the viewport width */
+        display: block; /* Center the image horizontally */
+        margin: 0 auto; /* Center the image horizontally */
+        float: right; /* Float the image to the right */
+    }
 </style>
 <body>
-    <h3 id ="daYear">Goat Fish Distribution in the Gulf of Mexico</h3>
-    <input id="dateSlider" type = "range" name = "Year" min = "2010" max = "2019" oninput="moveSlider(this.value)">
+    <h3 id ="daYear">Dwarf Goatfish Distribution in the Gulf of Mexico</h3>
+    <input id="dateSlider" type = "range" name = "Year" min = "2010" max = "2019" value = '2010' oninput="moveSlider(this.value)"> 
+    <span id="selectedYear">2010</span>
     <div id="map"></div>
+    <img id="dwarfGoatfishImage" src="https://ncfishes.com/wp-content/uploads/2020/07/Dwarf-Goatfish-Upeneus-parvus-scaled.jpg" alt="Dwarf Goatfish">
+    
     <script>
         //HW made by Sunwoo Yoon // Edited and annotated by J Arce
 
@@ -42,31 +51,40 @@
             }
         })
 
+     var circleStyle =  {
+    color: 'red',
+    fillColor: '#f03',
+    fillOpacity: 0.5,
+    radius: 500}
+
         var greenIcon = new LeafIcon({iconUrl: 'goatfish.png'})
 
         var latlng= [fishy[0].LAT, fishy[0].LONG]
 
-        var geojson = L.geoJson(fishy,{
-            pointToLayer: function(feature, latlng){
-                return L.marker(latlng, {icon: greenIcon})
-            }
-        }).addTo(map);
-
+        // var geojson = L.geoJson(fishy,{
+        //     pointToLayer: function(feature, latlng){
+        //         return L.marker(latlng, {icon: greenIcon})
+        //     }
+        // }).addTo(map);
+        
+        var myFish = []; // i have created an empty array where I will place all the markers
         function moveSlider(value) { // function called by the slider that uses the value to select one feature, using the index of the feature array. 
-            //console.log(e.value)
-            map.removeLayer(geojson);// leaflet method to remove a layer
-            document.getElementById('daYear').innerHTML = 'Dwarf Goat Fish' + fishy[value]
-            geojson = L.geoJson(fishy,{
-                pointToLayer: function(feature,latlng){
-                    return L.marker(latlng,{icon: greenIcon})
-                }
-            })
-            map.addLayer(geojson); // add the new layer
-            
-        }
-        moveSlider(0) // start the map with the first feature
+            myFish.forEach(e => e.remove())// removes each marker from the map
+            myFish = []; // start a new empty array
+
+            document.getElementById('selectedYear').textContent = value;
+
+            for (var i = 0; i < fishy.length; i++){ // I am making a loop 
+                if(fishy[i].Year == value){myFish.push(L.circle([fishy[i].LAT,fishy[i].LONG],circleStyle).addTo(map))};
+                // notice that I am selecting which values are going to be mapped based on the year
+            };  // end of loop
+        }// end of function
+
+
+
+        moveSlider(2010); // start the map with the first feature, in you case is the year 2010. 
         window.onload = function() {
-        document.getElementById('dateSlider').value = 0;  
+        document.getElementById('dateSlider').value = 2010;   /// the starting year, you had a zero
     }; // I added this section to make sure that the slider goes back to the first date after refreshing
 
     </script>
